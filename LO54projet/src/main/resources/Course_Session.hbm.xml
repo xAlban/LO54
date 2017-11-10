@@ -1,0 +1,15 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.burattoelezi.lo54.core">
+	<class name="Course_Session" table="">
+		<id name="id" column="ID_MOVIE">
+		    <generator class="identity"/>
+		</id>
+
+		<property name="title" column="TITLE" not-null="true" />
+		<property name="type" column="MOVIE_TYPE" not-null="true" />
+                <property name="numcopie" column="COPIES" />
+
+	</class>
+</hibernate-mapping>
