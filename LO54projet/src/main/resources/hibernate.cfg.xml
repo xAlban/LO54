@@ -43,13 +43,10 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.DerbyDialect</property>
     <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
-    <property name="hibernate.connection.url">jdbc:derby://localhost:1527/video</property>
-    <property name="hibernate.connection.username">video</property>
-    <property name="hibernate.connection.password">video</property>
+    <property name="hibernate.connection.url">jdbc:derby://localhost:1527/lo54</property>
+    <property name="hibernate.connection.username">lo54</property>
+    <property name="hibernate.connection.password">lo54</property>
     <property name="hbm2ddl.auto">validate</property>
     
-    <mapping resource="User.hbm.xml"/>
-    <mapping resource="Film.hbm.xml"/>
-    <mapping resource="Acteur.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
