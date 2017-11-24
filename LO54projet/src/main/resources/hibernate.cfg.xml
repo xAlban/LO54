@@ -48,5 +48,11 @@ Contributor(s):
     <property name="hibernate.connection.password">lo54</property>
     <property name="hbm2ddl.auto">validate</property>
     
+    <mapping ressource="Client.hbm.xml"/>
+    <mapping ressource="Course.hbm.xml"/>
+    <mapping ressource="Course_Session.hbm.xml"/>
+    <mapping ressource="Location.hbm.xml"/>
+    
+    
   </session-factory>
 </hibernate-configuration>

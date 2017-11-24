@@ -16,6 +16,7 @@ public class Client {
     private String address;
     private String phone;
     private String email;
+    private Course_Session fkCourseSession = new Course_Session();
 
     /**
      * @return the id
@@ -99,6 +100,21 @@ public class Client {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    /**
+     * @return the fkCourseSession
+     */
+    public Course_Session getFkCourseSession() {
+        return fkCourseSession;
+    }
+
+    /**
+     * @param fkCourseSession the fkCourseSession to set
+     */
+    public void setFkCourseSession(Course_Session fkCourseSession) {
+        this.fkCourseSession = fkCourseSession;
     }
     
 }
