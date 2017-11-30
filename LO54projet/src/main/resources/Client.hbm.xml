@@ -12,6 +12,6 @@
         <property name="address" column="ADDRESS" />
         <property name="phone" column="PHONE" />
         <property name="email" column="EMAIL" />
-        <many-to-one name="fkCourseSession" column="FK_COURSE_SESSION_ID">
+        <many-to-one name="fkCourseSession" column="FK_COURSE_SESSION_ID"/>
     </class>
 </hibernate-mapping>

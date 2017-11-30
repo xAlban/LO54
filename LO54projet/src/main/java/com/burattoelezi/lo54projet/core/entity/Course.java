@@ -3,14 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.burattoelezi.lo54projet.core;
+package com.burattoelezi.lo54projet.core.entity;
 
-/**
- *
- * @author aelez
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
 public class Course {
+    @Id @GeneratedValue
     private Integer id;
+    @Column(name="TITLE")
     private String title;
 
     /**

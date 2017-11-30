@@ -3,19 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.burattoelezi.lo54projet.core;
+package com.burattoelezi.lo54projet.core.entity;
 
-/**
- *
- * @author aelez
- */
+import java.sql.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="COURSE_SESSION")
 public class Course_Session {
+    @Id @GeneratedValue
     private Integer id;
-    private String title;
-    private String type;
-    private Integer numcopie;
-    private Course fkCourse = new Course();
-    private Location fkLocation = new Location();
+    @Column(name="START_DATE")
+    private Date startDate;
+    @Column(name="END_DATE")
+    private Date endDate;
+    @ManyToOne
+    private Course fkCourse;
+    @ManyToOne
+    private Location fkLocation;
 
     /**
      * @return the id
@@ -32,45 +43,31 @@ public class Course_Session {
     }
 
     /**
-     * @return the title
+     * @return the startDate
      */
-    public String getTitle() {
-        return title;
+    public Date getStartDate() {
+        return startDate;
     }
 
     /**
-     * @param title the title to set
+     * @param startDate the startDate to set
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     /**
-     * @return the type
+     * @return the endDate
      */
-    public String getType() {
-        return type;
+    public Date getEndDate() {
+        return endDate;
     }
 
     /**
-     * @param type the type to set
+     * @param endDate the endDate to set
      */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * @return the numcopie
-     */
-    public Integer getNumcopie() {
-        return numcopie;
-    }
-
-    /**
-     * @param numcopie the numcopie to set
-     */
-    public void setNumcopie(Integer numcopie) {
-        this.numcopie = numcopie;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     /**
@@ -100,5 +97,4 @@ public class Course_Session {
     public void setFkLocation(Location fkLocation) {
         this.fkLocation = fkLocation;
     }
-    
 }

@@ -3,19 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.burattoelezi.lo54projet.core;
+package com.burattoelezi.lo54projet.core.entity;
 
-/**
- *
- * @author aelez
- */
-public class Client {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="CLIENT")
+public class Client implements Serializable {
+    @Id @GeneratedValue
     private Integer id;
+    @Column(name="LASTNAME")
     private String lastName;
+    @Column(name="FIRSTNAME")
     private String firstName;
+    @Column(name="ADRESS")
     private String address;
+    @Column(name="PHONE")
     private String phone;
+    @Column(name="EMAIL")
     private String email;
+    @ManyToOne
     private Course_Session fkCourseSession = new Course_Session();
 
     /**
