@@ -29,6 +29,9 @@ public class Client implements Serializable {
     private String phone;
     @Column(name="EMAIL")
     private String email;
+    @Column(name="PASSWORD")
+    private String password;
+    
     @ManyToOne
     private Course_Session fkCourseSession = new Course_Session();
 
@@ -129,6 +132,20 @@ public class Client implements Serializable {
      */
     public void setFkCourseSession(Course_Session fkCourseSession) {
         this.fkCourseSession = fkCourseSession;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
     
 }

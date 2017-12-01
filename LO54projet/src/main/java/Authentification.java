@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import com.burattoelezi.lo54projet.core.service.ClientService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -32,14 +33,15 @@ public class Authentification extends HttpServlet {
      */
     
     
-    private int test_identifiants(String login, String password){
+    private Integer test_identifiants(String email, String password){
         //Cette fonction va tester l'existence de l'utilisateur dans la base.
         //Il faudra rajouter un champ mot de passe.
         //La fonction renvoie l'ID du client (PKEY dans la table CLIENT) qui servira pour l'enregistrement
         //eventuel a une session de formation
         
-        if (login.equals("titi")) return 254;
-        else return -1;
+        ClientService serv = new ClientService();
+        return serv.rechercheID(email, password);
+        
     }
 
     
@@ -50,10 +52,10 @@ public class Authentification extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
 
             HttpSession session=request.getSession();
-            String login = new String(request.getParameter("login"));
+            String email = new String(request.getParameter("email"));
             String password = new String(request.getParameter("password"));
             
-            int id=test_identifiants(login,password);
+            int id=test_identifiants(email,password);
             if (id!=-1){
                 session.setAttribute("id_user",String.valueOf(id));
                 session.setAttribute("authenticated",true);
@@ -61,9 +63,9 @@ public class Authentification extends HttpServlet {
                 dis.forward(request, response);
             }else
             {
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('User or password incorrect');");
-                out.println("</script>");
+//                out.println("<script type=\"text/javascript\">");
+//                out.println("alert('User or password incorrect');");
+//                out.println("</script>");
                 RequestDispatcher dis = request.getRequestDispatcher("./login_failed.html");
                 dis.forward(request, response);
             }

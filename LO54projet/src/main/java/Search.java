@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import com.burattoelezi.lo54projet.core.service.ClientService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -36,6 +37,8 @@ public class Search extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             
             HttpSession session=request.getSession();
+            ClientService service = new ClientService();
+               
             
             //récupération des paramètres du formulaire
             String motCle = new String(request.getParameter("keyword"));
@@ -52,6 +55,8 @@ public class Search extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1> Ci-dessous les sessions correspondant à vos critères </h1>");
+            
+                      
 
             // Faire une boucle d'affichage des sessions trouvées avec un lien pour s'y inscrire.
             out.println("<p>Mot clé de la recherche : "+ motCle +"</p>");

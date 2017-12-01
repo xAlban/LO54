@@ -9,7 +9,6 @@ import com.burattoelezi.lo54projet.core.service.ClientService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.util.Collections.list;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,20 +23,15 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/restricted/Recherche_Sessions"})
 public class SessionSearch extends HttpServlet {
-
-    private ClientService mesServ;
-    private List<Location> locs;
-    
-    public SessionSearch(){
-        mesServ = new ClientService();
-    }
-    
+   
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+             ClientService mesServ = new ClientService();
+             List<Location> locs;
             
             HttpSession session=request.getSession();
             
@@ -71,10 +65,10 @@ public class SessionSearch extends HttpServlet {
             
             // Lancer une méthode pour lancer la liste des lieux de session à venir, dedoublonnee
             
-            
-
+            out.println("<SELECT>");
             //faire une boucle pour afficher chaque occurrence a coté d'une balise <OPTION>
             List<Location> listloc = mesServ.getAllLoc();
+            out.println("<p>test</p>");
             for(Location l : listloc){
                 out.println("<OPTION>"+l.getCity());
                
