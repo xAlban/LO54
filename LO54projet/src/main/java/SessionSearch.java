@@ -65,12 +65,12 @@ public class SessionSearch extends HttpServlet {
             
             // Lancer une méthode pour lancer la liste des lieux de session à venir, dedoublonnee
             
-            out.println("<SELECT>");
-            //faire une boucle pour afficher chaque occurrence a coté d'une balise <OPTION>
+            out.println("<SELECT name=\"location\">");
+            //faire une boucle pour afficher chaque occurrence a coté d'une balise <OPTION>+-
+            out.println("<OPTION disabled selected value> Choisir Lieu </OPTION> ");
             List<Location> listloc = mesServ.getAllLoc();
-            out.println("<p>test</p>");
             for(Location l : listloc){
-                out.println("<OPTION>"+l.getCity());
+                out.println("<OPTION>"+l.getCity()+"</OPTION>");
                
             }
 
