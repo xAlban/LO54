@@ -36,7 +36,7 @@ public class ClientService {
         return dao.rechercheID(email, password);
     }
     
-    public List<Course_Session> getCourse_SessionWithParam(Date debut, Date fin, String keyword){
-        return dao.getCourse_SessionWithParam(debut, fin, keyword);
+    public List<Course_Session> getCourse_SessionWithParam(Date debut, Date fin, String keyword, String location){
+        return dao.getCourse_SessionWithParam(debut, fin, keyword, location);
     }
 }

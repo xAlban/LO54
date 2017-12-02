@@ -151,12 +151,22 @@ public class HibernateDAO {
     }
         
     
-    public List<Course_Session> getCourse_SessionWithParam(Date debut, Date fin, String keyword){
+    public List<Course_Session> getCourse_SessionWithParam(Date debut, Date fin, String keyword, String location){
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         try{
             session.beginTransaction();
-            Query query = session.createQuery("from Course_Session c where c.startDate >= '"+debut.toString()+"' and c.endDate <= '"+fin.toString()+"'");
+            String strquery = "from Course_Session c where c.fkLocation.city ='"+location+"' ";
+            if(debut.toString() !=""){
+                strquery = strquery.concat("and c.startDate >= '"+debut.toString()+"' ");
+            }
+            if(fin.toString() != ""){
+                strquery = strquery.concat("and c.endDate <= '"+fin.toString()+"' ");
+            }
+            if(keyword != ""){
+                strquery = strquery.concat("and c.fkCourse.title like '%"+keyword+"%'");
+            }
+            Query query = session.createQuery(strquery);
             List<Course_Session> listcs = (List<Course_Session>) query.list();
             session.getTransaction().commit();
             session.close();

@@ -64,15 +64,23 @@ public class Search extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1> Ci-dessous les sessions correspondant à vos critères </h1>");
-            
+           /* 
+            if (motCle.equals("") && dateDebut != "" && dateFin != "" && location != ""){
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date debut = new java.sql.Date(formatter.parse(dateDebut).getTime());
+                Date fin = new java.sql.Date(formatter.parse(dateFin).getTime());
+                List<Course_Session> listcs = service.getCourse_SessionWithParam(debut, fin, location);
+            }
+           */ 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date debut = new java.sql.Date(formatter.parse(dateDebut).getTime());
             Date fin = new java.sql.Date(formatter.parse(dateFin).getTime());
             
-            List<Course_Session> listcs = service.getCourse_SessionWithParam(debut, fin, dateFin);
+            List<Course_Session> listcs = service.getCourse_SessionWithParam(debut, fin, motCle, location);
             for(Course_Session cs : listcs){
                 Hibernate.initialize(cs.getFkCourse());
-                out.println("<p>" + cs.getFkCourse().getTitle()+ "</p>");
+                Hibernate.initialize(cs.getFkLocation());
+                out.println("<p><b>  "+cs.getFkCourse().getTitle()+"</b><a href=\"./DetailSession?idsession="+cs.getId()+"&start="+cs.getStartDate()+"&end="+cs.getEndDate()+"&title="+cs.getFkCourse().getTitle()+"&location="+cs.getFkLocation().getCity()+"\">  -> Cliquez pour voir le détail</a></p>");
             }
 
             // Faire une boucle d'affichage des sessions trouvées avec un lien pour s'y inscrire.
