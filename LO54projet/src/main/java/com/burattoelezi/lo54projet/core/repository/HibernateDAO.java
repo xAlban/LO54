@@ -156,7 +156,7 @@ public class HibernateDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try{
             session.beginTransaction();
-            Query query = session.createQuery("from Course_Session c where c.Start_Date >= "+debut+" and c.End_Date <= "+fin);
+            Query query = session.createQuery("from Course_Session c where c.startDate >= '"+debut.toString()+"' and c.endDate <= '"+fin.toString()+"'");
             List<Course_Session> listcs = (List<Course_Session>) query.list();
             session.getTransaction().commit();
             session.close();

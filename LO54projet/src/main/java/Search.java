@@ -4,15 +4,23 @@
  * and open the template in the editor.
  */
 
+import com.burattoelezi.lo54projet.core.entity.Course_Session;
 import com.burattoelezi.lo54projet.core.service.ClientService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Hibernate;
 
 /**
  *
@@ -31,7 +39,7 @@ public class Search extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -41,9 +49,10 @@ public class Search extends HttpServlet {
                
             
             //récupération des paramètres du formulaire
-            String motCle = new String(request.getParameter("keyword"));
-            String dateDebut = new String(request.getParameter("dateDebut"));
-            String dateFin = new String(request.getParameter("dateFin"));
+            String motCle = request.getParameter("keyword");
+            String dateDebut = request.getParameter("dateDebut");
+            String dateFin = request.getParameter("dateFin");
+            String location = request.getParameter("location");
            // String lieu = new String(request.getParameter("lieu"));
             
             // appel d'une fonction qui renvoit la collection des sessions répondant aux critères
@@ -56,13 +65,21 @@ public class Search extends HttpServlet {
             out.println("<body>");
             out.println("<h1> Ci-dessous les sessions correspondant à vos critères </h1>");
             
-                      
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date debut = new java.sql.Date(formatter.parse(dateDebut).getTime());
+            Date fin = new java.sql.Date(formatter.parse(dateFin).getTime());
+            
+            List<Course_Session> listcs = service.getCourse_SessionWithParam(debut, fin, dateFin);
+            for(Course_Session cs : listcs){
+                Hibernate.initialize(cs.getFkCourse());
+                out.println("<p>" + cs.getFkCourse().getTitle()+ "</p>");
+            }
 
             // Faire une boucle d'affichage des sessions trouvées avec un lien pour s'y inscrire.
             out.println("<p>Mot clé de la recherche : "+ motCle +"</p>");
             out.println("<p>Date de début de la recherche : "+ dateDebut +"</p>");
             out.println("<p>Date de fin de la recherche : "+ dateFin +"</p>");
-           // out.println("<p>Lieu de session de la recherche : "+ lieu +"</p>");
+            out.println("<p>Lieu de session de la recherche : "+ location +"</p>");
             out.println("<p>Code User : "+ session.getAttribute("id_user") +"</p>");
             out.println("</body>");
             out.println("</html>");
@@ -81,7 +98,11 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -95,7 +116,11 @@ public class Search extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
