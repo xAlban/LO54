@@ -64,6 +64,7 @@ public class Search extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1> Ci-dessous les sessions correspondant à vos critères </h1>");
+            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb\" crossorigin=\"anonymous\">");
            /* 
             if (motCle.equals("") && dateDebut != "" && dateFin != "" && location != ""){
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -72,15 +73,20 @@ public class Search extends HttpServlet {
                 List<Course_Session> listcs = service.getCourse_SessionWithParam(debut, fin, location);
             }
            */ 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date debut = new java.sql.Date(formatter.parse(dateDebut).getTime());
-            Date fin = new java.sql.Date(formatter.parse(dateFin).getTime());
+            List<Course_Session> listcs;
+            if(!dateDebut.isEmpty() && !dateFin.isEmpty()){
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date debut = new java.sql.Date(formatter.parse(dateDebut).getTime());
+                Date fin = new java.sql.Date(formatter.parse(dateFin).getTime());
+                listcs = service.getCourse_SessionWithParam(debut, fin, motCle, location);
+            }else{
+                listcs = service.getCourse_SessionWithParam(motCle, location);
+            }
             
-            List<Course_Session> listcs = service.getCourse_SessionWithParam(debut, fin, motCle, location);
             for(Course_Session cs : listcs){
                 Hibernate.initialize(cs.getFkCourse());
                 Hibernate.initialize(cs.getFkLocation());
-                out.println("<p><b>  "+cs.getFkCourse().getTitle()+"</b><a href=\"./DetailSession?idsession="+cs.getId()+"&start="+cs.getStartDate()+"&end="+cs.getEndDate()+"&title="+cs.getFkCourse().getTitle()+"&location="+cs.getFkLocation().getCity()+"\">  -> Cliquez pour voir le détail</a></p>");
+                out.println("<p><b>  "+cs.getFkCourse().getTitle()+"</b><a class=\"btn btn-primary\" href=\"./DetailSession?idsession="+cs.getId()+"&start="+cs.getStartDate()+"&end="+cs.getEndDate()+"&title="+cs.getFkCourse().getTitle()+"&location="+cs.getFkLocation().getCity()+"\" role=\"button\">  -> Cliquez pour voir le détail</a></p>");
             }
 
             // Faire une boucle d'affichage des sessions trouvées avec un lien pour s'y inscrire.

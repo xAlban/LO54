@@ -4,87 +4,59 @@
  * and open the template in the editor.
  */
 
-import com.burattoelezi.lo54projet.core.entity.Location;
-import com.burattoelezi.lo54projet.core.service.ClientService;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author fburatto
  */
-@WebServlet(urlPatterns = {"/restricted/Recherche_Sessions"})
-public class SessionSearch extends HttpServlet {
-   
-    
+@WebServlet(urlPatterns = {"/restricted/DetailSession"})
+public class DetailSession extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-             ClientService mesServ = new ClientService();
-             List<Location> locs;
-            
-            HttpSession session=request.getSession();
-            
+            String id = request.getParameter("idsession");
+            String start = request.getParameter("start");
+            String end = request.getParameter("end");
+            String title = request.getParameter("title");
+            String location = request.getParameter("location");
+
             out.println("<!DOCTYPE html>");
             out.println("<html>");
-            
             out.println("<head>");
-            out.println("<title>Servlet Session_Search</title>");            
+            out.println("<title>Servlet DetailSession</title>");            
             out.println("</head>");
-            
             out.println("<body>");
-            out.println("<h1>SECTION DE RECHERCHE DE SESSIONS DE FORMATIONS</h1>");
+            out.println("<h1>Detail de la Session de formation </h1>");
             out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb\" crossorigin=\"anonymous\">");
-            out.println("<form action=\"./restricted/Recherches\" method=\"post\">");
+            out.println("<p><b>TITRE DE LA FORMATION : </b> "+title+"</p>");
+            out.println("<p><b>LIEU : </b> "+location+"</p>");
+            out.println("<p><p><b>DATE DE DEBUT : </b>"+start+"</p>");
+            out.println("<p><p><b>DATE DE FIN : </b>"+end+"</p>");
             
-            out.println("<div>");
-            out.println("<label for=\"login\">Recherche par mot clé dans l'intitlué de la session :</label>");
-            out.println("<input type=\"text\" name=\"keyword\" />");
-            out.println("</div>"); 
-            
-            out.println("<div>");
-            out.println("<p>Recherche par dates de session disponible : </p>");
-            out.println("<p><label for=\"login\">Date début</label>");
-            out.println("<input type=\"date\" name=\"dateDebut\" /></p>");
-            out.println("<p><label for=\"login\">Date fin</label>");
-            out.println("<input type=\"date\" name=\"dateFin\" /></p>");
-            out.println("</div>");
-            
-            out.println("<div>");
-            out.println("<label for=\"login\">Liste des lieux de sessions disponibles :</label>");
-            
-            // Lancer une méthode pour lancer la liste des lieux de session à venir, dedoublonnee
-            
-            out.println("<SELECT name=\"location\">");
-            //faire une boucle pour afficher chaque occurrence a coté d'une balise <OPTION>+-
-            out.println("<OPTION>Tout les lieux</OPTION> ");
-            List<Location> listloc = mesServ.getAllLoc();
-            for(Location l : listloc){
-                out.println("<OPTION>"+l.getCity()+"</OPTION>");
-               
-            }
-            out.println("</SELECT>"); 
-            out.println("</div><br>");                               
-            out.println("<div class=\"button\">"); 
-            out.println("<button type=\"submit\" class=\"btn btn-success\">Lancer la recherche</button>"); 
-            out.println("</div>"); 
-            
-            out.println("</form");
+            out.println("<p>Pour vous inscrire à cette formation, cliquez <a href=\"./inscription?idsession="+id+"\">ici </a></p>");
+
 
             out.println("</body>");
             out.println("</html>");
-      
-            
         }
     }
 

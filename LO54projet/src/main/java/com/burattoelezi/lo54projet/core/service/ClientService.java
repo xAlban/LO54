@@ -39,4 +39,12 @@ public class ClientService {
     public List<Course_Session> getCourse_SessionWithParam(Date debut, Date fin, String keyword, String location){
         return dao.getCourse_SessionWithParam(debut, fin, keyword, location);
     }
+    
+    public void affecteSession(String idClient, String idSession){
+        dao.affecteSession(idClient, idSession);
+    }
+
+    public List<Course_Session> getCourse_SessionWithParam(String motCle, String location) {
+        return dao.getCourse_SessionWithParam(motCle, location);
+    }
 }
