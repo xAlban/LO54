@@ -106,7 +106,7 @@ public class HibernateDAO {
     public Integer rechercheID(String email, String password){
         Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Integer result=0;
+            Integer result=-1;
             session.beginTransaction();
             
             Query query = session.createQuery("from Client c where c.email = ? ");
@@ -150,7 +150,7 @@ public class HibernateDAO {
                 }
             }
         return -1;
-    }
+}
         
     
     public List<Course_Session> getCourse_SessionWithParam(Date debut, Date fin, String keyword, String location){
@@ -320,5 +320,44 @@ public class HibernateDAO {
 
 
         
+    }
+
+    public List<Client> getListClients() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try{
+            session.beginTransaction();
+            List<Client> listloc = (List<Client>) session.createQuery("from Client").list();
+            session.getTransaction().commit();
+            session.close();
+            return listloc;
+                        
+        }
+            catch (HibernateException he){
+                he.printStackTrace();
+                if(session.getTransaction() != null){
+                    try{
+                        session.getTransaction().commit();
+                    }
+                    catch (HibernateException he2){
+                        he2.printStackTrace();
+                    }
+                }
+            }
+            finally{
+                if (session != null){
+                    try{
+                        
+                        session.close();
+                        HibernateUtil.getSessionFactory().close();
+                    
+                    
+
+                    }
+                    catch (HibernateException he){
+                        he.printStackTrace();
+                    }
+                }
+            }
+        return null;
     }
 }

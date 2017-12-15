@@ -48,16 +48,45 @@ public class SessionSearch extends HttpServlet {
             out.println("<form action=\"./restricted/Recherches\" method=\"post\">");
             
             out.println("<div>");
+            out.println("<p>(Pour acceder à la liste de clients, cliquez <a href=\"./restricted/ClientList\">ici</a>)</p>");
+            //Ci-dessous on teste si l'on vient déjà d'une saisie dans laquelle des champs n'ont pas été 
+            //correctement renseignés. Auquel cas on informe l'utilisateur du champ mal saisi,
+            //et on recharge les valeurs des champs remplis au préalable avec des valeurs correctes...
+            String validiteMotCle=(String)request.getAttribute("validiteMotCle");
+            if(validiteMotCle!=null) 
+                if(validiteMotCle.equals("false")) out.println("<p>Saisie incorrecte : mot clé trop long</p>");
+            
             out.println("<label for=\"login\">Recherche par mot clé dans l'intitlué de la session :</label>");
-            out.println("<input type=\"text\" name=\"keyword\" />");
+            String varTemp = request.getParameter("keyword");
+            if (varTemp==null) out.println("<input type=\"text\" name=\"keyword\" />");
+            else if (varTemp.isEmpty()) out.println("<input type=\"text\" name=\"keyword\" />");
+                 else out.println("<input type=\"text\" name=\"keyword\" value="+varTemp+" />");
             out.println("</div>"); 
             
             out.println("<div>");
+            
             out.println("<p>Recherche par dates de session disponible : </p>");
+
+            String validiteDateDebut=(String)request.getAttribute("validiteDateDebut");
+            if (validiteDateDebut!=null)
+                if(validiteDateDebut.equals("false")) out.println("<p>Saisie incorrecte : date de début incorrecte</p>");
+            
             out.println("<p><label for=\"login\">Date début</label>");
-            out.println("<input type=\"date\" name=\"dateDebut\" /></p>");
+            varTemp = request.getParameter("dateDebut");
+            if (varTemp==null) out.println("<input type=\"date\" name=\"dateDebut\" /></p>");
+            else if (varTemp.isEmpty()) out.println("<input type=\"date\" name=\"dateDebut\" /></p>");
+                 else out.println("<input type=\"date\" name=\"dateDebut\" value="+varTemp+" /></p>");
+            
+            String validiteDateFin=(String)request.getAttribute("validiteDateFin");
+            if (validiteDateFin!=null)
+                if(validiteDateFin.equals("false")) out.println("<p>Saisie incorrecte : date de fin incorrecte</p>");
+            
             out.println("<p><label for=\"login\">Date fin</label>");
-            out.println("<input type=\"date\" name=\"dateFin\" /></p>");
+            varTemp = request.getParameter("dateFin");
+            if (varTemp==null) out.println("<input type=\"date\" name=\"dateFin\" /></p>");
+            else if (varTemp.isEmpty()) out.println("<input type=\"date\" name=\"dateFin\" /></p>");
+                 else out.println("<input type=\"date\" name=\"dateFin\" value="+varTemp+" /></p>");
+            
             out.println("</div>");
             
             out.println("<div>");
@@ -73,17 +102,17 @@ public class SessionSearch extends HttpServlet {
                 out.println("<OPTION>"+l.getCity()+"</OPTION>");
                
             }
+
             out.println("</SELECT>"); 
-            out.println("</div><br>");                               
+            out.println("</div><br>"); 
+                              
             out.println("<div class=\"button\">"); 
-            out.println("<button type=\"submit\" class=\"btn btn-success\">Lancer la recherche</button>"); 
+            out.println("<button type=\"submit\">Lancer la recherche</button>"); 
             out.println("</div>"); 
             
-            out.println("</form");
-
+            out.println("</form");                    
             out.println("</body>");
             out.println("</html>");
-      
             
         }
     }

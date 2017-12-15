@@ -47,4 +47,8 @@ public class ClientService {
     public List<Course_Session> getCourse_SessionWithParam(String motCle, String location) {
         return dao.getCourse_SessionWithParam(motCle, location);
     }
+
+    public List<Client> getListClients() {
+        return dao.getListClients();
+    }
 }
