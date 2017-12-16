@@ -45,10 +45,10 @@ public class SessionSearch extends HttpServlet {
             out.println("<body>");
             out.println("<h1>SECTION DE RECHERCHE DE SESSIONS DE FORMATIONS</h1>");
             out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb\" crossorigin=\"anonymous\">");
-            out.println("<form action=\"./restricted/Recherches\" method=\"post\">");
+            out.println("<form action=\"./Recherches\" method=\"post\">");
             
             out.println("<div>");
-            out.println("<p>(Pour acceder à la liste de clients, cliquez <a href=\"./restricted/ClientList\">ici</a>)</p>");
+            out.println("<p>(Pour acceder à la liste de clients, cliquez <a href=\"./ClientList\">ici</a>)</p>");
             //Ci-dessous on teste si l'on vient déjà d'une saisie dans laquelle des champs n'ont pas été 
             //correctement renseignés. Auquel cas on informe l'utilisateur du champ mal saisi,
             //et on recharge les valeurs des champs remplis au préalable avec des valeurs correctes...

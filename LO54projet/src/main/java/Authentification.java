@@ -59,8 +59,9 @@ public class Authentification extends HttpServlet {
             if (id!=-1){
                 session.setAttribute("id_user",String.valueOf(id));
                 session.setAttribute("authenticated",true);
-                RequestDispatcher dis = request.getRequestDispatcher("./restricted/Recherche_Sessions");
-                dis.forward(request, response);
+                HttpServletResponse hresp = null;
+                if (response instanceof HttpServletResponse) hresp = (HttpServletResponse) response;
+                hresp.sendRedirect(request.getContextPath()+"/restricted/Recherche_Sessions");
             }else
             {
 //                out.println("<script type=\"text/javascript\">");
