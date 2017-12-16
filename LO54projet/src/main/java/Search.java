@@ -6,6 +6,8 @@
 
 import com.burattoelezi.lo54projet.core.entity.Course_Session;
 import com.burattoelezi.lo54projet.core.service.ClientService;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.Timer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -29,7 +31,10 @@ import org.hibernate.Hibernate;
  */
 @WebServlet(urlPatterns = {"/restricted/Recherches"})
 public class Search extends HttpServlet {
-
+    
+    private final MetricRegistry metrics = new MetricRegistry();
+    private final Timer responses = metrics.timer("responses"); 
+    
     private boolean testDate(String maDate){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
@@ -100,7 +105,7 @@ public class Search extends HttpServlet {
             
             HttpSession session=request.getSession();
             ClientService service = new ClientService();
-               
+  
             
             //récupération des paramètres du formulaire
             String motCle = request.getParameter("keyword");
@@ -131,16 +136,23 @@ public class Search extends HttpServlet {
                 List<Course_Session> listcs = service.getCourse_SessionWithParam(debut, fin, location);
             }
            */ 
+            final Timer.Context context = responses.time();
             List<Course_Session> listcs;
             if(!dateDebut.isEmpty() && !dateFin.isEmpty()){
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date debut = new java.sql.Date(formatter.parse(dateDebut).getTime());
                 Date fin = new java.sql.Date(formatter.parse(dateFin).getTime());
+                
+                
                 listcs = service.getCourse_SessionWithParam(debut, fin, motCle, location);
+                context.stop();
             }else{
+
                 listcs = service.getCourse_SessionWithParam(motCle, location);
+                context.stop();
             }
-            
+            out.println("<p>Nombre de requete effectuer: "+ responses.getCount()+"</p>");
+            out.println("<p>Temps pour la derniere requete: "+ responses.getMeanRate()+"</p>");
             if (listcs.isEmpty()) out.println("<p> <b>Pas de session trouvée !</b> </p><br>");
             else
             for(Course_Session cs : listcs){

@@ -6,6 +6,8 @@
 
 import com.burattoelezi.lo54projet.core.entity.Location;
 import com.burattoelezi.lo54projet.core.service.ClientService;
+import com.codahale.metrics.Meter;
+import com.codahale.metrics.MetricRegistry;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,6 +26,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/restricted/Recherche_Sessions"})
 public class SessionSearch extends HttpServlet {
    
+    private final MetricRegistry metrics = new MetricRegistry();
+    private final Meter requests = metrics.meter("requests");
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -32,7 +36,7 @@ public class SessionSearch extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
              ClientService mesServ = new ClientService();
              List<Location> locs;
-            
+            requests.mark();
             HttpSession session=request.getSession();
             
             out.println("<!DOCTYPE html>");
@@ -110,6 +114,8 @@ public class SessionSearch extends HttpServlet {
             out.println("<button type=\"submit\">Lancer la recherche</button>"); 
             out.println("</div>"); 
             
+            out.println("<div>");
+            out.println("<p> Metric test: "+ requests.getCount() + " count, " + requests.getOneMinuteRate() + " /min rate");
             out.println("</form");                    
             out.println("</body>");
             out.println("</html>");
