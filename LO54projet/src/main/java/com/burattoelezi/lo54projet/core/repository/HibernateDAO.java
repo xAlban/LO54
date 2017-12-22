@@ -61,7 +61,13 @@ public class HibernateDAO {
             }
         return null;
     }
-    
+    public boolean isConnected(){
+        boolean result;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        result=session.isConnected();
+        session.close();
+        return result;   
+    }
     public List<Location> getAllLoc(){
         
         Session session = HibernateUtil.getSessionFactory().openSession();

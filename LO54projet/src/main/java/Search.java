@@ -6,6 +6,7 @@
 
 import com.burattoelezi.lo54projet.core.entity.Course_Session;
 import com.burattoelezi.lo54projet.core.service.ClientService;
+import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -34,6 +36,12 @@ public class Search extends HttpServlet {
     
     private final MetricRegistry metrics = new MetricRegistry();
     private final Timer responses = metrics.timer("responses"); 
+    private final ConsoleReporter reporter = ConsoleReporter.forRegistry(metrics).build();
+    
+    
+    public void Search(){
+        reporter.start(5,TimeUnit.MILLISECONDS);
+    }
     
     private boolean testDate(String maDate){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -168,7 +176,7 @@ public class Search extends HttpServlet {
                 context.stop();
             }
             
-           
+            reporter.report();
             
             out.println("<div class=\"row\">");
             out.println("<div class=\"col\"></div>");

@@ -6,12 +6,14 @@
 
 import com.burattoelezi.lo54projet.core.entity.Location;
 import com.burattoelezi.lo54projet.core.service.ClientService;
+import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +30,12 @@ public class SessionSearch extends HttpServlet {
    
     private final MetricRegistry metrics = new MetricRegistry();
     private final Meter requests = metrics.meter("requests");
+    private final ConsoleReporter reporter = ConsoleReporter.forRegistry(metrics).build();
+    
+    public void SessionSearch(){
+        reporter.start(5,TimeUnit.MILLISECONDS);
+    }
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -175,6 +183,7 @@ public class SessionSearch extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
             
+            reporter.report();
         }
     }
 

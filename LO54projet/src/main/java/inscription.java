@@ -5,6 +5,8 @@
  */
 
 import com.burattoelezi.lo54projet.core.service.ClientService;
+import com.codahale.metrics.Counter;
+import com.codahale.metrics.MetricRegistry;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -30,6 +32,10 @@ public class inscription extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    private final MetricRegistry metrics = new MetricRegistry();
+    private final Counter counter = new Counter();
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -62,7 +68,11 @@ public class inscription extends HttpServlet {
                 ClientService serv = new ClientService();
                 HttpSession session=request.getSession();
                 serv.affecteSession((String)session.getAttribute("id_user"),id);
+                counter.inc();
+                long nbInscrits = counter.getCount();
                 out.println("<p style=\"text-align:center\">Votre inscription a été prise en compte....</p>");
+                if(nbInscrits == 1) out.println("<p> Vous êtes la 1ière personne inscrite à une formation aujourd'hui.</p>");
+                else out.println("<p> Vous êtes la "+nbInscrits+"ième personne inscrite à une formation aujourd'hui.</p>");
                 out.println("<a style=\"text-align:center\" href=\"./Recherche_Sessions\" class=\"btn btn-lg btn-primary btn-block\">Retour page recherche</a>");            
                
              }

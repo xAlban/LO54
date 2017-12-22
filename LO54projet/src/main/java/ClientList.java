@@ -4,12 +4,17 @@
  * and open the template in the editor.
  */
 
+import com.burattoelezi.lo54projet.core.entity.DbHealthCheck;
 import com.burattoelezi.lo54projet.core.entity.Client;
 import com.burattoelezi.lo54projet.core.entity.Course_Session;
+import com.burattoelezi.lo54projet.core.repository.HibernateDAO;
 import com.burattoelezi.lo54projet.core.service.ClientService;
+import com.codahale.metrics.health.HealthCheck;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,6 +45,8 @@ public class ClientList extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             
             ClientService service = new ClientService();
+            HibernateDAO dao = new HibernateDAO();
+            DbHealthCheck dbhealthcheck = new DbHealthCheck(dao);
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -69,7 +76,13 @@ public class ClientList extends HttpServlet {
  
                 //out.println("<p><b>  "+cl.getFirstName()+"</b><a href=\"./DetailSession?idsession="+cs.getId()+"&start="+cs.getStartDate()+"&end="+cs.getEndDate()+"&title="+cs.getFkCourse().getTitle()+"&location="+cs.getFkLocation().getCity()+"\">  -> Cliquez pour voir le détail</a></p>");
             }
-            
+            try {
+                HealthCheck.Result res;
+                res=dbhealthcheck.check();
+                out.println("<p>Résultat du control de connectivité à la base de données : "+res.getMessage()+"</p>");
+            } catch (Exception ex) {
+                Logger.getLogger(ClientList.class.getName()).log(Level.SEVERE, null, ex); 
+            }
             out.println("</body>");
             out.println("</html>");
         }
