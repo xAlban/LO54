@@ -47,58 +47,51 @@ public class SessionSearch extends HttpServlet {
             out.println("</head>");
             
             out.println("<body>");
-            out.println("<h1>SECTION DE RECHERCHE DE SESSIONS DE FORMATIONS</h1>");
-            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb\" crossorigin=\"anonymous\">");
-            out.println("<form action=\"./Recherches\" method=\"post\">");
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+            out.println("<h1 style=\"text-align:center\">SECTION DE RECHERCHE DE SESSIONS DE FORMATIONS</h1>");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
+            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\">");
             
-            out.println("<div>");
-            out.println("<p>(Pour acceder à la liste de clients, cliquez <a href=\"./ClientList\">ici</a>)</p>");
-            //Ci-dessous on teste si l'on vient déjà d'une saisie dans laquelle des champs n'ont pas été 
+            
+            out.println("<form action=\"./Recherches\" method=\"post\" class=\"form-signin\">");
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\">");
+           
+            out.println("</div>");
+            
+            
+            
+            out.println("<div class=\"col\">");
+
+            
+            out.println("<label for=\"login\">Recherche par mot clé dans l'intitlué de la session :</label>");
+            String varTemp = request.getParameter("keyword");
+            if (varTemp==null) out.println("<input type=\"text\" name=\"keyword\" class=\"form-control\" placeholder=\"Mot clé\"/>");
+            else if (varTemp.isEmpty()) out.println("<input type=\"text\" name=\"keyword\" class=\"form-control\" placeholder=\"Mot clé\"/>");
+                 else out.println("<input type=\"text\" name=\"keyword\" class=\"form-control\" placeholder=\"Mot clé\" value="+varTemp+" />");
+            out.println("</div>");
+            out.println("<div class=\"col\">");
+             //Ci-dessous on teste si l'on vient déjà d'une saisie dans laquelle des champs n'ont pas été 
             //correctement renseignés. Auquel cas on informe l'utilisateur du champ mal saisi,
             //et on recharge les valeurs des champs remplis au préalable avec des valeurs correctes...
             String validiteMotCle=(String)request.getAttribute("validiteMotCle");
             if(validiteMotCle!=null) 
-                if(validiteMotCle.equals("false")) out.println("<p>Saisie incorrecte : mot clé trop long</p>");
-            
-            out.println("<label for=\"login\">Recherche par mot clé dans l'intitlué de la session :</label>");
-            String varTemp = request.getParameter("keyword");
-            if (varTemp==null) out.println("<input type=\"text\" name=\"keyword\" />");
-            else if (varTemp.isEmpty()) out.println("<input type=\"text\" name=\"keyword\" />");
-                 else out.println("<input type=\"text\" name=\"keyword\" value="+varTemp+" />");
-            out.println("</div>"); 
-            
-            out.println("<div>");
-            
-            out.println("<p>Recherche par dates de session disponible : </p>");
-
-            String validiteDateDebut=(String)request.getAttribute("validiteDateDebut");
-            if (validiteDateDebut!=null)
-                if(validiteDateDebut.equals("false")) out.println("<p>Saisie incorrecte : date de début incorrecte</p>");
-            
-            out.println("<p><label for=\"login\">Date début</label>");
-            varTemp = request.getParameter("dateDebut");
-            if (varTemp==null) out.println("<input type=\"date\" name=\"dateDebut\" /></p>");
-            else if (varTemp.isEmpty()) out.println("<input type=\"date\" name=\"dateDebut\" /></p>");
-                 else out.println("<input type=\"date\" name=\"dateDebut\" value="+varTemp+" /></p>");
-            
-            String validiteDateFin=(String)request.getAttribute("validiteDateFin");
-            if (validiteDateFin!=null)
-                if(validiteDateFin.equals("false")) out.println("<p>Saisie incorrecte : date de fin incorrecte</p>");
-            
-            out.println("<p><label for=\"login\">Date fin</label>");
-            varTemp = request.getParameter("dateFin");
-            if (varTemp==null) out.println("<input type=\"date\" name=\"dateFin\" /></p>");
-            else if (varTemp.isEmpty()) out.println("<input type=\"date\" name=\"dateFin\" /></p>");
-                 else out.println("<input type=\"date\" name=\"dateFin\" value="+varTemp+" /></p>");
-            
+                if(validiteMotCle.equals("false")) out.println("<p class=\"text-danger\">Saisie incorrecte : mot clé trop long</p>");
+            out.println("</div>");
             out.println("</div>");
             
-            out.println("<div>");
-            out.println("<label for=\"login\">Liste des lieux de sessions disponibles :</label>");
+                        out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+            out.println("<label for=\"login\" >Lieux :</label>");
             
             // Lancer une méthode pour lancer la liste des lieux de session à venir, dedoublonnee
             
-            out.println("<SELECT name=\"location\">");
+            out.println("<SELECT name=\"location\" class=\"form-control\">");
             //faire une boucle pour afficher chaque occurrence a coté d'une balise <OPTION>+-
             out.println("<OPTION>Tout les lieux</OPTION> ");
             List<Location> listloc = mesServ.getAllLoc();
@@ -108,14 +101,76 @@ public class SessionSearch extends HttpServlet {
             }
 
             out.println("</SELECT>"); 
-            out.println("</div><br>"); 
-                              
-            out.println("<div class=\"button\">"); 
-            out.println("<button type=\"submit\">Lancer la recherche</button>"); 
-            out.println("</div>"); 
+            out.println("</div>");   
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
             
-            out.println("<div>");
-            out.println("<p> Metric test: "+ requests.getCount() + " count, " + requests.getOneMinuteRate() + " /min rate");
+            
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\">");          
+            out.println("</div>");
+            out.println("<div class=\"col\">");
+            out.println("<label for=\"login\">Date début</label>");
+            varTemp = request.getParameter("dateDebut");
+            if (varTemp==null) out.println("<input type=\"date\" name=\"dateDebut\" class=\"form-control\" placeholder=\"Date début\"/>");
+            else if (varTemp.isEmpty()) out.println("<input type=\"date\" name=\"dateDebut\" class=\"form-control\" placeholder=\"Date début\"/>");
+                 else out.println("<input type=\"date\" name=\"dateDebut\" class=\"form-control\" placeholder=\"Date début\" value="+varTemp+" />");
+            
+            
+            out.println("</div>");
+            out.println("<div class=\"col\">");
+            String validiteDateDebut=(String)request.getAttribute("validiteDateDebut");
+            if (validiteDateDebut!=null)
+                if(validiteDateDebut.equals("false")) out.println("<p class=\"text-danger\">Saisie incorrecte : date de début incorrecte</p>");
+            
+            out.println("</div>");
+            out.println("</div>");
+            
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");            
+            out.println("<label for=\"login\">Date fin</label>");
+            varTemp = request.getParameter("dateFin");
+            if (varTemp==null) out.println("<input type=\"date\" name=\"dateFin\" class=\"form-control\" placeholder=\"Date fin\"/>");
+            else if (varTemp.isEmpty()) out.println("<input type=\"date\" name=\"dateFin\" class=\"form-control\" placeholder=\"Date fin\"/>");
+                 else out.println("<input type=\"date\" name=\"dateFin\" class=\"form-control\" placeholder=\"Date fin\" value="+varTemp+" />");
+            out.println("</div>");
+            out.println("<div class=\"col\">");
+            String validiteDateFin=(String)request.getAttribute("validiteDateFin");
+            if (validiteDateFin!=null)
+                if(validiteDateFin.equals("false")) out.println("<p class=\"text-danger\">Saisie incorrecte : date de fin incorrecte</p>");
+            out.println("</div>");
+
+            out.println("</div>");
+            
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+            out.println("<button type=\"submit\" class=\"btn btn-lg btn-primary btn-block\">Lancer la recherche</button>");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
+            out.println("");
+            out.println("");
+            out.println("");
+            
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+            out.println("(Pour acceder à la liste de clients, cliquez <a href=\"./ClientList\">ici</a>)");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
+            
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+
+            out.println("<div class=\"col\">");
+            out.println("Metric test: "+ requests.getCount() + " count, " + requests.getOneMinuteRate() + " /min rate");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
+            
             out.println("</form");                    
             out.println("</body>");
             out.println("</html>");

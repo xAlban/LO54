@@ -126,8 +126,24 @@ public class Search extends HttpServlet {
             out.println("<title>Servlet Search</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> Ci-dessous les sessions correspondant à vos critères </h1>");
-            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb\" crossorigin=\"anonymous\">");
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+            out.println("<h1 style=\"text-align:center\"> Ci-dessous les sessions correspondant à vos critères </h1>");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
+            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\">");
+            
+            
+            
+            out.println("");
+            out.println("");
+            out.println("");
+            out.println("");
+            
+            
+
            /* 
             if (motCle.equals("") && dateDebut != "" && dateFin != "" && location != ""){
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -151,22 +167,53 @@ public class Search extends HttpServlet {
                 listcs = service.getCourse_SessionWithParam(motCle, location);
                 context.stop();
             }
-            out.println("<p>Nombre de requete effectuer: "+ responses.getCount()+"</p>");
-            out.println("<p>Temps pour la derniere requete: "+ responses.getMeanRate()+"</p>");
-            if (listcs.isEmpty()) out.println("<p> <b>Pas de session trouvée !</b> </p><br>");
-            else
+            
+           
+            
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+
+            if (listcs.isEmpty()){
+                out.println("<p> <b>Pas de session trouvée !</b> </p>");
+                out.println("</div>");
+                out.println("<div class=\"col\"></div>");
+                out.println("</div>");
+            }
+
+            else {
+                 out.println("<div class=\"list-group\">");
+            //Boucle d'affichage des sessions trouvées avec un lien pour s'y inscrire.
             for(Course_Session cs : listcs){
                 Hibernate.initialize(cs.getFkCourse());
                 Hibernate.initialize(cs.getFkLocation());
-                out.println("<p><b>  "+cs.getFkCourse().getTitle()+"</b><a href=\"./DetailSession?idsession="+cs.getId()+"&start="+cs.getStartDate()+"&end="+cs.getEndDate()+"&title="+cs.getFkCourse().getTitle()+"&location="+cs.getFkLocation().getCity()+"\">  -> Cliquez pour voir le détail</a></p>");
+                out.println("<a style=\"text-align:center\" href=\"./DetailSession?idsession="+cs.getId()+"&start="+cs.getStartDate()+"&end="+cs.getEndDate()+"&title="+cs.getFkCourse().getTitle()+"&location="+cs.getFkLocation().getCity()+"\" class=\"list-group-item list-group-item-action list-group-item-primary\">"+cs.getFkCourse().getTitle()+"</a>");
             }
+            out.println("</div>");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
+            }
+            out.println("<div class=\"row\">");
+            out.println("</div>");
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+            out.println("<b>Mot clé de la recherche : </b>"+ motCle +"<br>");
+            out.println("<b>Date de début de la recherche :</b> "+ dateDebut +"<br>");
+            out.println("<b>Date de fin de la recherche :</b> "+ dateFin +"<br>");
+            out.println("<b>Lieu de session de la recherche :</b> "+ location +"<br>");
+            out.println("<b>Code User :</b> "+ session.getAttribute("id_user") +"<br>");
+            out.println("<p>Nombre de requete effectuer: "+ responses.getCount()+"</p>");
+            out.println("<p>Temps pour la derniere requete: "+ responses.getMeanRate()+"</p>");
+            out.println("<a style=\"text-align:center\" href=\"./Recherche_Sessions\" class=\"btn btn-lg btn-primary btn-block\">Retour</a>");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
 
-            // Faire une boucle d'affichage des sessions trouvées avec un lien pour s'y inscrire.
-            out.println("<p>Mot clé de la recherche : "+ motCle +"</p>");
-            out.println("<p>Date de début de la recherche : "+ dateDebut +"</p>");
-            out.println("<p>Date de fin de la recherche : "+ dateFin +"</p>");
-            out.println("<p>Lieu de session de la recherche : "+ location +"</p>");
-            out.println("<p>Code User : "+ session.getAttribute("id_user") +"</p>");
+           
+
+
             out.println("</body>");
             out.println("</html>");
             }else

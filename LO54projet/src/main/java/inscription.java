@@ -44,19 +44,31 @@ public class inscription extends HttpServlet {
             out.println("<title>Servlet inscription</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Validation !</h1>");
-            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb\" crossorigin=\"anonymous\">");
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+            out.println("<h1 style=\"text-align:center\" class=\"text-success\">Inscription réussie !</h1>");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
+            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\">");
+            
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
              if (id.isEmpty()) {
-                out.println("<p><b>Erreur ! Contactez votre administrateur....</b></p>");
+                out.println("<p class=\"text-danger\"><b>Erreur ! Contactez votre administrateur....</b></p>");
              }else{
                 ClientService serv = new ClientService();
                 HttpSession session=request.getSession();
                 serv.affecteSession((String)session.getAttribute("id_user"),id);
-                out.println("<p>Votre inscription a été prise en compte....</p>");
-                out.println("<p><a href=\"./Recherche_Sessions\">Retour....<a></p>");            
+                out.println("<p style=\"text-align:center\">Votre inscription a été prise en compte....</p>");
+                out.println("<a style=\"text-align:center\" href=\"./Recherche_Sessions\" class=\"btn btn-lg btn-primary btn-block\">Retour page recherche</a>");            
                
              }
-      
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
             out.println("</body>");
             out.println("</html>");
         }

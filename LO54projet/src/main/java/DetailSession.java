@@ -45,14 +45,30 @@ public class DetailSession extends HttpServlet {
             out.println("<title>Servlet DetailSession</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Detail de la Session de formation </h1>");
-            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb\" crossorigin=\"anonymous\">");
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
+            out.println("<h1 style=\"text-align:center\">Detail de la Session de formation </h1>");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
+            
+            
+            out.println("<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css\" rel=\"stylesheet\">");
+            
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col\"></div>");
+            out.println("<div class=\"col\">");
             out.println("<p><b>TITRE DE LA FORMATION : </b> "+title+"</p>");
             out.println("<p><b>LIEU : </b> "+location+"</p>");
             out.println("<p><p><b>DATE DE DEBUT : </b>"+start+"</p>");
             out.println("<p><p><b>DATE DE FIN : </b>"+end+"</p>");
+            out.println("<a style=\"text-align:center\" href=\"./inscription?idsession="+id+"\" class=\"btn btn-lg btn-primary btn-block\">S'inscrire</a>");
+            out.println("<a style=\"text-align:center\" href=\"./Recherche_Sessions\" class=\"btn btn-lg btn-primary btn-block\">Retour</a>");
+            out.println("</div>");
+            out.println("<div class=\"col\"></div>");
+            out.println("</div>");
             
-            out.println("<p>Pour vous inscrire à cette formation, cliquez <a href=\"./inscription?idsession="+id+"\">ici </a></p>");
 
 
             out.println("</body>");

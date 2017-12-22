@@ -5,27 +5,57 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h1>Authentification</h1>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <br>
-        <p> <b>Votre session a expire !</b></p>
-        
-        <p>Veuillez saisir de nouveaux vos identifiants.</p>
-        
-       <form action="./authentification" method="post">
-            <div>
-                <label for="email">email :</label>
-                <input type="text" name="email" />
+         <div class="row">
+            <div class="col">
             </div>
-            <br>
-            <div>
+            <div class="col">
+                <h1 style="text-align:center">Authentification</h1>
+                
+                <br>
+                <p style="text-align:center"> <b>Votre session a expiré !</b></p>
+        
+                <p style="text-align:center">Veuillez saisir de nouveaux vos identifiants.</p>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
+        
+       <form action="./authentification" method="post" class="form-signin">
+            <div class="form-row">
+                <div class="col">
+                </div>
+                <div class="col">
+                <label for="email">Email :</label>
+                <input type="text" name="email" class="form-control" placeholder="Email">
+                </div>
+                <div class="col">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                </div>
+                <div class="col">
                 <label for="password">Password :</label>
-                <input type="password" name="password" />
+                <input type="password" name="password" class="form-control" placeholder="Mot de Passe">
+                </div>
+                <div class="col">
+                </div>                
             </div>
             <br>
-            <div class="button">
-                <button type="submit">Connexion...</button>
+            <div class="row">
+            <div class="col">
             </div>
+            <div class="col">
+            <div class="button">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+            </div>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+            
         </form>
     </body>
 </html>
