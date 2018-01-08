@@ -27,11 +27,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/restricted/Recherche_Sessions"})
 public class SessionSearch extends HttpServlet {
-   
+    /*Metrics implementation*/
     private final MetricRegistry metrics = new MetricRegistry();
     private final Meter requests = metrics.meter("requests");
     private final ConsoleReporter reporter = ConsoleReporter.forRegistry(metrics).build();
     
+    /*Methode utilisee par le ConsoleReporter*/
     public void SessionSearch(){
         reporter.start(5,TimeUnit.MILLISECONDS);
     }

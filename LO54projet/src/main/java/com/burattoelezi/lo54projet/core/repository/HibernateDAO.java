@@ -22,7 +22,7 @@ import org.hibernate.criterion.Restrictions;
  * @author aelez
  */
 public class HibernateDAO {
-    
+    /*Renvoie les information d'un client grace a son ID*/
     public Client getInfoClient(int idClient){
         Session session = HibernateUtil.getSessionFactory().openSession();
         try{
@@ -61,6 +61,7 @@ public class HibernateDAO {
             }
         return null;
     }
+    /*Ping la DataBase et nous renvoies True si elle est connectée*/
     public boolean isConnected(){
         boolean result;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -68,6 +69,7 @@ public class HibernateDAO {
         session.close();
         return result;   
     }
+    /*Recuprere toutes les locations des cours disponible*/
     public List<Location> getAllLoc(){
         
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -108,7 +110,7 @@ public class HibernateDAO {
         return null;
     }
     
-    
+    /*Recupere l'ID du client grace a l'email et password si la combinaison et fausse renvoie -1*/
     public Integer rechercheID(String email, String password){
         Session session = HibernateUtil.getSessionFactory().openSession();
         try{
@@ -158,7 +160,7 @@ public class HibernateDAO {
         return -1;
 }
         
-    
+    /*Recupere les listes des sessions de cours disponible en fonction des parametres donnes*/
     public List<Course_Session> getCourse_SessionWithParam(Date debut, Date fin, String keyword, String location){
         
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -229,6 +231,7 @@ public class HibernateDAO {
         return null;
     }
     
+    /*Meme fonction qu'au dessus sauf qu'ici on passe en parametre un mot cle et une location seulement*/
     public List<Course_Session> getCourse_SessionWithParam(String keyword, String location){
         
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -278,7 +281,7 @@ public class HibernateDAO {
             }
         return null;
     }
-    
+    /*Affecte une session a un client*/
     public void affecteSession(String idClient, String idSession){
         
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -327,7 +330,7 @@ public class HibernateDAO {
 
         
     }
-
+    /*Renvoie la liste des Clients inscrit*/
     public List<Client> getListClients() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try{

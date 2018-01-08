@@ -33,16 +33,17 @@ import org.hibernate.Hibernate;
  */
 @WebServlet(urlPatterns = {"/restricted/Recherches"})
 public class Search extends HttpServlet {
-    
+    /*Metric implementation*/
     private final MetricRegistry metrics = new MetricRegistry();
     private final Timer responses = metrics.timer("responses"); 
     private final ConsoleReporter reporter = ConsoleReporter.forRegistry(metrics).build();
     
-    
+    /*Method utilisee par le ConsoleReporter */
     public void Search(){
         reporter.start(5,TimeUnit.MILLISECONDS);
     }
     
+    /*Test si la date est parsee corectement*/
     private boolean testDate(String maDate){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
@@ -54,6 +55,7 @@ public class Search extends HttpServlet {
         }  
     }
     
+    /*Test l'ordre des dates*/
     private boolean testOrdreDates(String dateDebut, String dateFin){
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -68,7 +70,7 @@ public class Search extends HttpServlet {
             return false;
         }  
     }    
-    
+    /*Controle des parametres*/
     private boolean controlData(String dateDebut,String dateFin, String motCle, VerifyFormField verify){
         if (motCle.length()<5) verify.setValidMC(true);
 
@@ -80,14 +82,6 @@ public class Search extends HttpServlet {
         else{ 
                if (testDate(dateDebut)) verify.setValidDD(true);
                if (testDate(dateFin)) verify.setValidDF(true);
-               /*
-               if (verify.isValidDD() && verify.isValidDF())
-                       if (testOrdreDates(dateDebut,dateFin)){
-                            //test que date début <= à date de fin
-                            verify.setValidDD(false);
-                            verify.setValidDF(false);
-                       }
-               */
             }
            
         if(verify.isValidDD() && verify.isValidDF() && verify.isValidMC()) return true;
@@ -109,8 +103,7 @@ public class Search extends HttpServlet {
             throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
+                       
             HttpSession session=request.getSession();
             ClientService service = new ClientService();
   
@@ -150,16 +143,6 @@ public class Search extends HttpServlet {
             out.println("");
             out.println("");
             
-            
-
-           /* 
-            if (motCle.equals("") && dateDebut != "" && dateFin != "" && location != ""){
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date debut = new java.sql.Date(formatter.parse(dateDebut).getTime());
-                Date fin = new java.sql.Date(formatter.parse(dateFin).getTime());
-                List<Course_Session> listcs = service.getCourse_SessionWithParam(debut, fin, location);
-            }
-           */ 
             final Timer.Context context = responses.time();
             List<Course_Session> listcs;
             if(!dateDebut.isEmpty() && !dateFin.isEmpty()){
